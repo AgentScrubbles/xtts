@@ -1,6 +1,6 @@
 {
   "domain": "xtts",
-  "name": "XTTS",
+  "name": "xtts",
   "codeowners": ["@AgentScrubbles"],
   "config_flow": true,
   "dependencies": [],

@@ -25,7 +25,7 @@ class XTTSConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle a config flow for XTTS."""
     VERSION = 1
     data_schema = vol.Schema({
-        vol.Required(URL): str,
+        vol.Required(URL, default=""): str,
         vol.Required(CONF_VOICE, default=""): str
     })
 
@@ -35,7 +35,7 @@ class XTTSConfigFlow(ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 await validate_user_input(user_input)
-                await self.async_set_unique_id(f"{user_input[CONF_VOICE]}_{user_input[CONF_MODEL]}")
+                await self.async_set_unique_id(f"{user_input[CONF_VOICE]}")
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(title="XTTS", data=user_input)
             except data_entry_flow.AbortFlow:
