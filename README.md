@@ -1,11 +1,14 @@
-# openai_tts
-# OpenAI TTS Custom Component for Home Assistant
+# xtts
+
+# XTTS Custom Component for Home Assistant
+
+_Originally forked from https://github.com/sfortis/openai_tts_
 
 This custom component integrates OpenAI's Text-to-Speech (TTS) service with Home Assistant, allowing users to convert text into spoken audio. The service supports various languages and voices, offering customizable options such as voice model.
 
 ## Description
 
-The OpenAI TTS component for Home Assistant makes it possible to use the OpenAI API to generate spoken audio from text. This can be used in automations, assistants, scripts, or any other component that supports TTS within Home Assistant. *You need an openAI API key.*
+The OpenAI TTS component for Home Assistant makes it possible to use the OpenAI API to generate spoken audio from text. This can be used in automations, assistants, scripts, or any other component that supports TTS within Home Assistant. _You need an openAI API key._
 
 ## Features
 
@@ -16,7 +19,7 @@ The OpenAI TTS component for Home Assistant makes it possible to use the OpenAI 
 
 ## Sample
 
-  [https://www.youtube.com/watch?v=oeeypI_X0qs](https://www.youtube.com/shorts/otTe6-YkQjI)
+[https://www.youtube.com/watch?v=oeeypI_X0qs](https://www.youtube.com/shorts/otTe6-YkQjI)
 
 ## Sample Home Assistant service
 
@@ -30,9 +33,9 @@ data:
   message: My speech has improved now!
 ```
 
-## HACS installation ( *preferred!* ) 
+## HACS installation ( _preferred!_ )
 
-1. Go to the sidebar HACS menu 
+1. Go to the sidebar HACS menu
 
 2. Click on the 3-dot overflow menu in the upper right and select the "Custom Repositories" item.
 

@@ -7,8 +7,8 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.entity import generate_entity_id
-from .const import CONF_API_KEY, CONF_MODEL, CONF_SPEED, CONF_VOICE, DOMAIN
-from .openaitts_engine import OpenAITTSEngine
+from .const import URL, CONF_MODEL, CONF_SPEED, CONF_VOICE, DOMAIN
+from .xtts_engine import XTTSEngine
 from homeassistant.exceptions import MaxLengthExceeded
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,18 +19,16 @@ async def async_setup_entry(
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up OpenAI Text-to-speech platform via config entry."""
-    engine = OpenAITTSEngine(
-        config_entry.data[CONF_API_KEY],
+    """Set up X Text-to-speech platform via config entry."""
+    engine = XTTSEngine(
         config_entry.data[CONF_VOICE],
-        config_entry.data[CONF_MODEL],
-        config_entry.data[CONF_SPEED],
+        config_entry.data[URL]
     )
-    async_add_entities([OpenAITTSEntity(hass, config_entry, engine)])
+    async_add_entities([XTTSEntity(hass, config_entry, engine)])
 
 
-class OpenAITTSEntity(TextToSpeechEntity):
-    """The OpenAI TTS entity."""
+class XTTSEntity(TextToSpeechEntity):
+    """The XTTS entity."""
     _attr_has_entity_name = True
     _attr_should_poll = False
 
@@ -39,8 +37,8 @@ class OpenAITTSEntity(TextToSpeechEntity):
         self.hass = hass
         self._engine = engine
         self._config = config
-        self._attr_unique_id = f"{config.data[CONF_VOICE]}_{config.data[CONF_MODEL]}"
-        self.entity_id = generate_entity_id("tts.openai_tts_{}", config.data[CONF_VOICE], hass=hass)
+        self._attr_unique_id = f"{config.data[CONF_VOICE]}"
+        self.entity_id = generate_entity_id("tts.xtts_{}", config.data[CONF_VOICE], hass=hass)
 
     @property
     def default_language(self):
@@ -57,7 +55,7 @@ class OpenAITTSEntity(TextToSpeechEntity):
         return {
             "identifiers": {(DOMAIN, self._attr_unique_id)},
             "model": f"{self._config.data[CONF_VOICE]}",
-            "manufacturer": "OpenAI"
+            "manufacturer": "xtts"
         }
 
     @property
@@ -68,13 +66,10 @@ class OpenAITTSEntity(TextToSpeechEntity):
     def get_tts_audio(self, message, language, options=None):
         """Convert a given text to speech and return it as bytes."""
         try:
-            if len(message) > 4096:
-                raise MaxLengthExceeded
-
             speech = self._engine.get_tts(message)
 
             # The response should contain the audio file content
-            return "mp3", speech.content
+            return "wav", speech.content
         except MaxLengthExceeded:
             _LOGGER.error("Maximum length of the message exceeded")
         except Exception as e:

@@ -3,19 +3,16 @@ import requests
 from .const import URL
 
 
-class OpenAITTSEngine:
+class XTTSEngine:
 
-    def __init__(self, api_key: str, voice: str, model: str, speed: int):
-        self._api_key = api_key
+    def __init__(self, voice: str, url: str):
         self._voice = voice
-        self._model = model
-        self._speed = speed
-        self._url = URL
+        self._url = url
 
     def get_tts(self, text: str):
         """ Makes request to OpenAI TTS engine to convert text into audio"""
         headers: dict = {"Authorization": f"Bearer {self._api_key}"}
-        data: dict = {"model": self._model, "input": text, "voice": self._voice, "speed": self._speed}
+        data: dict = {"text": text, "speaker_wav": self._voice, "language": "en"}
         return requests.post(self._url, headers=headers, json=data)
 
     @staticmethod
