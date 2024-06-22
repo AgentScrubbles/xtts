@@ -8,9 +8,11 @@ class XTTSEngine:
 
     def get_tts(self, text: str):
         """ Makes request to OpenAI TTS engine to convert text into audio"""
-        headers: dict = {"Authorization": f"Bearer {self._api_key}"}
+        headers: dict = {}
         data: dict = {"text": text, "speaker_wav": self._voice, "language": "en"}
-        return requests.post(self._url, headers=headers, json=data)
+        url = '{}/tts_to_audio/'.format(self._url)
+        print('[XTTS][VOICE={}][URL={}]'.format(url, self._voice))
+        return requests.post(url, headers=headers, json=data)
 
     @staticmethod
     def get_supported_langs() -> list:
