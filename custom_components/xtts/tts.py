@@ -7,7 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.entity import generate_entity_id
-from .const import URL, CONF_MODEL, CONF_SPEED, CONF_VOICE, DOMAIN
+from .const import CONF_URL, CONF_VOICE, DOMAIN
 from .xtts_engine import XTTSEngine
 from homeassistant.exceptions import MaxLengthExceeded
 
@@ -22,7 +22,7 @@ async def async_setup_entry(
     """Set up X Text-to-speech platform via config entry."""
     engine = XTTSEngine(
         config_entry.data[CONF_VOICE],
-        config_entry.data[URL]
+        config_entry.data[CONF_URL]
     )
     async_add_entities([XTTSEntity(hass, config_entry, engine)])
 

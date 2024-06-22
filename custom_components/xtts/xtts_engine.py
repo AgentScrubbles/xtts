@@ -1,8 +1,5 @@
 import requests
 
-from .const import URL
-
-
 class XTTSEngine:
 
     def __init__(self, voice: str, url: str):
