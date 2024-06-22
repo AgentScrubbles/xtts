@@ -4,34 +4,19 @@
 
 _Originally forked from https://github.com/sfortis/openai_tts_
 
-This custom component integrates OpenAI's Text-to-Speech (TTS) service with Home Assistant, allowing users to convert text into spoken audio. The service supports various languages and voices, offering customizable options such as voice model.
+This component was originally forked from the original openai_tts to swap over to use the [XTTS-API-Server](https://github.com/daswer123/xtts-api-server)
+
+This is still a work in progress, but essentially you simply set your host, the speaker, and eventually language too (right now hardcoded to "en"), and it will call out to your XTTS server when making the request.
 
 ## Description
 
-The OpenAI TTS component for Home Assistant makes it possible to use the OpenAI API to generate spoken audio from text. This can be used in automations, assistants, scripts, or any other component that supports TTS within Home Assistant. _You need an openAI API key._
+The primary use case is to add this to your existing virtual assistant to use your own voices at home. This can be used in automations, assistants, scripts, or any other component that supports TTS within Home Assistant.
+
+You **must** be running your own local instance of [XTTS-API-Server](https://github.com/daswer123/xtts-api-server).
 
 ## Features
 
-- Text-to-Speech conversion using OpenAI's API
-- Support for multiple languages and voices
-- Customizable speech model (check https://platform.openai.com/docs/guides/text-to-speech for supported voices and models)
-- Integration with Home Assistant's assistant, automations and scripts
-
-## Sample
-
-[https://www.youtube.com/watch?v=oeeypI_X0qs](https://www.youtube.com/shorts/otTe6-YkQjI)
-
-## Sample Home Assistant service
-
-```
-service: tts.speak
-target:
-  entity_id: tts.openai_nova_engine
-data:
-  cache: true
-  media_player_entity_id: media_player.bedroom_speaker
-  message: My speech has improved now!
-```
+- Text-to-Speech conversion using XTTS-Api-Server
 
 ## HACS installation ( _preferred!_ )
 
@@ -39,7 +24,7 @@ data:
 
 2. Click on the 3-dot overflow menu in the upper right and select the "Custom Repositories" item.
 
-3. Copy/paste https://github.com/sfortis/openai_tts into the "Repository" textbox and select "Integration" for the category entry.
+3. Copy/paste https://github.com/daswer123/xtts-api-server into the "Repository" textbox and select "Integration" for the category entry.
 
 4. Click on "Add" to add the custom repository.
 
@@ -51,9 +36,9 @@ data:
 
 1. Ensure you have a `custom_components` folder within your Home Assistant configuration directory.
 
-2. Inside the `custom_components` folder, create a new folder named `openai_tts`.
+2. Inside the `custom_components` folder, create a new folder named `xtts`.
 
-3. Place the repo files inside `openai_tts` folder.
+3. Place the repo files inside `xtts` folder.
 
 4. Restart Home Assistant
 
