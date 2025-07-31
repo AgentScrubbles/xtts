@@ -22,7 +22,8 @@ async def async_setup_entry(
     """Set up X Text-to-speech platform via config entry."""
     engine = XTTSEngine(
         config_entry.data[CONF_VOICE],
-        config_entry.data[CONF_URL]
+        config_entry.data[CONF_URL],
+        config_entry.data[CONF_MODEL]
     )
     async_add_entities([XTTSEntity(hass, config_entry, engine)])
 
