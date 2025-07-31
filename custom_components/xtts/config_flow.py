@@ -9,7 +9,7 @@ from homeassistant.config_entries import ConfigFlow
 from homeassistant.helpers.selector import selector
 from homeassistant.exceptions import HomeAssistantError
 
-from .const import CONF_URL, CONF_VOICE, DOMAIN
+from .const import CONF_URL, CONF_VOICE, DOMAIN, CONF_MODEL
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -18,6 +18,8 @@ async def validate_user_input(user_input: dict):
     """Validate user input fields."""
     if user_input.get(CONF_URL) is None:
         raise ValueError("URL is required")
+    if user_input.get(CONF_MODEL) is None:
+        raise ValueError("Model is required")
     if user_input.get(CONF_VOICE) is None:
         raise ValueError("Voice is required")
 
@@ -26,7 +28,8 @@ class XTTSConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
     data_schema = vol.Schema({
         vol.Required(CONF_URL, default=""): str,
-        vol.Required(CONF_VOICE, default=""): str
+        vol.Required(CONF_VOICE, default=""): str,
+        vol.Required(CONF_MODEL, default=""): str
     })
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None):
